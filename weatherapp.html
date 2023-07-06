@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <h1>Weather Information</h1>
+    <div id="weather-info"></div>
+    <form>
+      <label for="long">Longitude</label><br />
+      <input type="text" id="long" /><br />
+      <label for="lat">Latitude</label><br />
+      <input type="text" id="lat" />
+      <button type="button" id="submitBtn">Get Weather</button>
+    </form>
+    <script>
+      // Fetch weather data using the API key
+      const apiKey = "850aab6b9050a4e1432addb4f62d5d96";
+      const weatherInfo = document.getElementById("weather-info");
+      const submitBtn = document.getElementById("submitBtn");
+
+      submitBtn.addEventListener("click", () => {
+        const longInput = document.getElementById("long").value;
+        const latInput = document.getElementById("lat").value;
+        const apiUrl = `https://api.openweathermap.org/data/2.5/weather?lat=${latInput}&lon=${longInput}&appid=${apiKey}`;
+
+        fetch(apiUrl)
+          .then((response) => response.json())
+          .then((data) => {
+            // Update HTML with weather information
+            weatherInfo.innerHTML = JSON.stringify(data, null, 2);
+          })
+          .catch((error) => {
+            console.log("Error fetching weather data:", error);
+          });
+      });
+    </script>
+  </body>
+</html>
